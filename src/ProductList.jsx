@@ -9,6 +9,7 @@ function ProductList({ onHomeClick }) {
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
   const [addedToCart, setAddedToCart] = useState({});
   const dispatch = useDispatch();
+  const cartItemCount = useSelector((state) => state.cart.items.length); // Redux cart item count
 
   const plantsArray = [
     {
@@ -349,7 +350,9 @@ function ProductList({ onHomeClick }) {
                     id="mainIconPathAttribute"
                   ></path>
                 </svg>
-                
+                {cartItemCount > 0 && (
+                  <span className="cart_quantity_count">{cartItemCount}</span>
+                )}
               </h1>
             </a>
           </div>
@@ -374,10 +377,13 @@ function ProductList({ onHomeClick }) {
                     <div className="product-price">{plant.cost}</div>
                     <div>{plant.description}</div>
                     <button
-                      className={addedToCart[plant.name] ? "product-button added-to-cart" :" product-button"}
+                      className={
+                        addedToCart[plant.name]
+                          ? "product-button added-to-cart"
+                          : " product-button"
+                      }
                       onClick={() => handleAddToCart(plant)}
-                      
-                      >
+                    >
                       Add to Cart
                     </button>
                   </div>
